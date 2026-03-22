@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+spec:
+  replicas: 2 # عشان لو واحد وقع التاني يشتغل (High Availability)
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hossam/backend-mood:v1 # الـ Image اللي عملناها بـ Docker
+        ports:
+        - containerPort: 3000
+        env:
+        # هنا السحر! بنقول للـ Backend روح كلم الـ Service اللي اسمها postgres
+        - name: DB_HOST
+          value: "postgres" 
+        - name: DB_USER
+          value: "hossam"
+        - name: DB_PASSWORD
+          value: "password123"
+        - name: DB_NAME
+          value: "mood_db"

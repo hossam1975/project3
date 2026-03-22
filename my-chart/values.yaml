@@ -1,0 +1,16 @@
+# لوحة التحكم في المشروع كله
+replicaCount: 2
+
+backend:
+  image: hossam/backend-mood
+  tag: "v1" # الـ CI هيغير دي لـ v2 أوتوماتيك
+  port: 3000
+
+frontend:
+  image: hossam/frontend-mood
+  tag: "v1"
+  host: buzzel.local
+
+database:
+  storageSize: 5Gi
+  password: "securepassword123"

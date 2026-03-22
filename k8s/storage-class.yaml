@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner # بنستخدم التخزين المحلي للـ Node
+reclaimPolicy: Retain # لو مسحت الـ DB، الداتا تفضل موجودة (مهم جداً!)
+volumeBindingMode: WaitForFirstConsumer

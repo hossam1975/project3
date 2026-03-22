@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-db
+spec:
+  serviceName: "postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "mood_db"
+        - name: POSTGRES_USER
+          value: "hossam"
+        - name: POSTGRES_PASSWORD
+          value: "password123"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data # مسار الداتا جوه الـ Container
+  volumeClaimTemplates: 
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-storage"
+      resources:
+        requests:
+          storage: 5Gi

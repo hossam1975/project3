@@ -33,7 +33,7 @@ spec:
       name: postgres-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "local-storage"
+      storageClassName: "local-path-retain"
       resources:
         requests:
           storage: 5Gi

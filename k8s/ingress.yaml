@@ -1,27 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: main-ingress
+  name: hossam-ingress
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
-    # لو عندك شهادة SSL بنضيفها هنا
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-  - host: buzzel.local  # الاسم اللي في الرسمة!
+  - host: buzzel.local
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: frontend-service # يودي للـ Frontend
-            port:
-              number: 80
-      - path: /api # أي حاجة فيها api تروح للـ Backend
-        pathType: Prefix
-        backend:
-          service:
-            name: backend-service
+            name: frontend-service # التأكد إن ده نفس الاسم اللي في kubectl get svc
             port:
               number: 80
